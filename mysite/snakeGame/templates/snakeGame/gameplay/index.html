@@ -1,0 +1,19 @@
+
+{% block top %}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+
+  <title>Gameplay</title>
+
+  <link rel="stylesheet" type="{% static 'snakeGame/text/css' %}" href="style.css">
+
+  <script src="{% static 'snakeGame/libraries/p5.min.js' %}"></script>
+  <script src="{% static 'snakeGame/libraries/p5.sound.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <script src="{% static 'snakeGame/sketch.js' %}"></script>
+    <h1>Teste</h1>
+{% endblock %}
+
