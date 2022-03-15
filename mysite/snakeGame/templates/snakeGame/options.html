@@ -1,0 +1,17 @@
+{% extends 'snakeGame/base_generic.html' %}
+
+{% block title %}
+Options
+{% endblock %}
+
+{% block content %}
+<form action="/options/" method="POST">
+
+    {% csrf_token %}
+
+    <input name="color" value="color" type="color">
+
+    <button type="submit"></button>
+
+</form>
+{% endblock %}

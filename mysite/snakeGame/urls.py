@@ -5,5 +5,6 @@ urlpatterns = [
     path('', views.home),
     path('home/', views.home),
     path('gameplay/', views.gameplay),
+    path('options/', views.options),
 
 ]
