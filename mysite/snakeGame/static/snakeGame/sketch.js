@@ -1,21 +1,30 @@
 var x = 100;
+var red = 255;
+var green = 0;
+var blue = 0;
 
 function preload() {
 
 }
 
 function setup() {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const color = urlParams.get('color');
+  try {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    color = urlParams.get('color');
+    red = color.slice(0, 3);
+    green = color.slice(3, 6);
+    blue = color.slice(6, 9);
+  } catch {
+    
+  }
 
   createCanvas(400, 400);
   rectMode(CENTER);
-  console.log(color.slice(0, 2), color.slice(3, 5), color.slice(6, 8));
 }
 
 function draw() {
   background(0);
-  fill(color.slice(0, 2), color.slice(3, 5), color.slice(6, 8));
+  fill(red, green, blue);
   ellipse(mouseX, mouseY, x);
 }
