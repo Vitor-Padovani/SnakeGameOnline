@@ -1,4 +1,6 @@
-playerColors = new colors()
+playerColors = new colors();
+player1 = new snake();
+let scale = 20;
 
 function preload() {
 
@@ -8,13 +10,15 @@ function setup() {
   url_info();
 
   createCanvas(400, 400);
-  rectMode(CENTER);
+  frameRate(30);
 }
 
 function draw() {
   background(127);
   fill(playerColors.red, playerColors.green, playerColors.blue);
   ellipse(mouseX, mouseY, 100);
+  player1.update();
+  player1.show();
 }
 
 function url_info() {
@@ -46,6 +50,22 @@ function colors() {
 function snake() {
   this.x = 0;
   this.y = 0;
-  this.x_speed = 0;
+  this.x_speed = 1;
   this.y_speed = 0;
+  this.size = 0;
+  this.tail = 0;
+
+  this.update = function() {
+    this.x = this.x + this.x_speed*scale;
+    this.y = this.y + this.y_speed*scale;
+
+    this.x = constrain(this.x, 0, width-scale)
+    this.y = constrain(this.y, 0, height-scale)
+  }
+  this.show = function() {
+    for (var i = 0; i < this.size; i++) {
+      rect(this.tail[i].x, this.tail[i].y, scale);
+    }
+    rect(this.x, this.y, scale);
+  }
 }
