@@ -1,12 +1,11 @@
 let scale = 20;
-let fpsBaseValue = 10;
-let fps;
 
 function preload() {
 
 }
 
 function setup() {
+  frames = new fps();
   playerColors = new colors();
   player1 = new snake();
   food = new food();
@@ -14,7 +13,7 @@ function setup() {
   url_info();
 
   createCanvas(640, 640);
-  frameRate(fpsBaseValue);
+  frameRate(frames.num);
 
   food.pick_location();
 }
@@ -25,8 +24,8 @@ function mousePressed() {
 
 function draw() {
   background(127);
+  frameRate(frames.num);
 
-  fill(playerColors.red, playerColors.green, playerColors.blue);
   player1.update();
   player1.show();
 
@@ -34,7 +33,6 @@ function draw() {
     food.pick_location();
   }
 
-  fill(255, 0, 0);
   rect(food.vector.x, food.vector.y, scale);
 }
 
@@ -43,10 +41,7 @@ function url_info() {
   const urlParams = new URLSearchParams(queryString);
 
   try {
-    color = urlParams.get('color');
-    playerColors.red = color.slice(0, 3);
-    playerColors.green = color.slice(3, 6);
-    playerColors.blue = color.slice(6, 9);
+    url_color = urlParams.get('color');
   } catch {
     console.log('Color Error;')
   }
@@ -88,6 +83,7 @@ function snake() {
     var d = dist(this.x, this.y, food.x, food.y);
     if (d < 1) {
       this.size++;
+      frames.increase(0.3);
       return true
     } else {
       return false
@@ -110,7 +106,7 @@ function snake() {
   }
 
   this.show = function() {
-    fill(playerColors.red, playerColors.green, playerColors.blue);
+    fill('#' + url_color);
     for (var i = 0; i < this.size; i++) {
       rect(this.tail[i].x, this.tail[i].y, scale);
     }
@@ -133,4 +129,21 @@ function food() {
     this.vector = createVector(floor(random(1, cols-1)), floor(random(1, rows-1)));
     this.vector.mult(scale);
   }
+}
+
+function fps() {
+  this.base_value = 10;
+  this.max_value = 21;
+  this.num = this.base_value;
+
+  this.increase = function(value) {
+    if (value > 0) {
+      this.num += value;
+    } else {
+      this.num = this.base_value;
+    }
+  
+    this.num = constrain(this.num, this.base_value, this.max_value);
+  }
+
 }

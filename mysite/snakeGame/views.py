@@ -9,9 +9,10 @@ def gameplay(response):
     return render(response, 'snakeGame/gameplay.html')
 
 def options(response):
-
     if response.method == 'POST':
+        hex = response.POST.get('color')[1:]
 
+        '''
         hex = response.POST.get('color')[1:]
 
         rgb = ''
@@ -19,7 +20,8 @@ def options(response):
             decimal = int(hex[i:i+2], 16)
             decimal = f'{"0" * (3-len(str(decimal)))}{decimal}'
             rgb += str(decimal)
+        '''
 
-        return HttpResponseRedirect(f'/gameplay?&color={rgb}', {'color': rgb})
+        return HttpResponseRedirect(f'/gameplay?&color={hex}', {'color': hex})
 
     return render(response, 'snakeGame/options.html')
