@@ -77,16 +77,17 @@ function colors() {
 }
 
 function snake() {
-  this.x = 0;
-  this.y = 0;
+  this.x = scale;
+  this.y = scale;
   this.x_speed = 1;
   this.y_speed = 0;
   this.size = 0;
-  this.tail = 0;
+  this.tail = [];
 
   this.eat = function(food) {
     var d = dist(this.x, this.y, food.x, food.y);
     if (d < 1) {
+      this.size++;
       return true
     } else {
       return false
@@ -94,6 +95,11 @@ function snake() {
   }
 
   this.update = function() {
+    for (var i = 0; i < this.tail.length-1; i++) {
+      this.tail[i] = this.tail[i+1];
+    }
+    this.tail[this.size-1] = createVector(this.x, this.y);
+
     key_pressed(this);
 
     this.x = this.x + this.x_speed*scale;
@@ -104,6 +110,7 @@ function snake() {
   }
 
   this.show = function() {
+    fill(playerColors.red, playerColors.green, playerColors.blue);
     for (var i = 0; i < this.size; i++) {
       rect(this.tail[i].x, this.tail[i].y, scale);
     }
