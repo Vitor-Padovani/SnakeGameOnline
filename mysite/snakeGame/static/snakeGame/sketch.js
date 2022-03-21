@@ -23,7 +23,7 @@ function mousePressed() {
 }
 
 function draw() {
-  background(127);
+  background('#212121');
   frameRate(frames.num);
 
   player1.update();
