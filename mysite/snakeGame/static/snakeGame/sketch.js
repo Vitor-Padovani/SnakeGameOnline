@@ -30,6 +30,10 @@ function draw() {
   player1.update();
   player1.show();
 
+  if (player1.eat(food.vector)) {
+    food.pick_location();
+  }
+
   fill(255, 0, 0);
   rect(food.vector.x, food.vector.y, scale);
 }
@@ -80,6 +84,15 @@ function snake() {
   this.size = 0;
   this.tail = 0;
 
+  this.eat = function(food) {
+    var d = dist(this.x, this.y, food.x, food.y);
+    if (d < 1) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   this.update = function() {
     key_pressed(this);
 
@@ -89,12 +102,14 @@ function snake() {
     this.x = constrain(this.x, 0, width-scale)
     this.y = constrain(this.y, 0, height-scale)
   }
+
   this.show = function() {
     for (var i = 0; i < this.size; i++) {
       rect(this.tail[i].x, this.tail[i].y, scale);
     }
     rect(this.x, this.y, scale);
   }
+
   this.dir = function(x, y) {
     this.x_speed = x;
     this.y_speed = y;
